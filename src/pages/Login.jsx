@@ -12,14 +12,14 @@ export default function Login() {
         <h4 className="text-center text-3xl font-bold">Login</h4>
         <FormInput
           type="email"
-          label="email"
+          label="Seu e-mail"
           name="identifier"
           defaultValue="test@test.com"
         />
 
         <FormInput
           type="password"
-          label="password"
+          label="Sua senha"
           name="password"
           defaultValue="secret"
         />
@@ -33,11 +33,8 @@ export default function Login() {
 
         <p className="text-center">
           Não tem cadastro?
-          <Link
-            to="/register"
-            className="ml-2 link link-hover link-primary capitalize"
-          >
-            Cadastra-se
+          <Link to="/cadastro" className="ml-2 link link-hover link-primary">
+            Cadastre-se
           </Link>
         </p>
       </Form>
