@@ -7,9 +7,9 @@ export default function HomeLayout() {
     <>
       <Header />
 
-      <div className="align-element p-20">
+      <main className="align-element px-8">
         <Outlet />
-      </div>
+      </main>
     </>
   );
 }

@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 @layer components {
-  .lign-element {
-    @apply mx-auto max-w-6 px-8;
+  .align-element {
+    @apply mx-auto max-w-screen-xl px-8;
   }
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  min-height: 100vh;
 }
