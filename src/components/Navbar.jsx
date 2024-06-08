@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaBarsStaggered } from "react-icons/fa6";
-import { BsCart3, BsFillCartFill } from "react-icons/bs";
-// import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
-// import { useTheme } from "../hooks/useTheme";
-// import { useCart } from "../hooks/useCart";
+import { BsCart3, BsMoonFill, BsSunFill } from "react-icons/bs";
 import NavLinks from "./NavLinks";
 
+const themes = {
+  corporate: "corporate",
+  business: "business",
+};
+
+const getSavedTheme = () => localStorage.getItem("theme") || themes.corporate;
+
 export default function Navbar() {
+  const [theme, setTheme] = useState(getSavedTheme());
+
+  const handleTheme = () => {
+    const { corporate, business } = themes;
+    const newTheme = theme === corporate ? business : corporate;
+    setTheme(newTheme);
+  };
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   return (
     <nav className="bg-base-200">
       <div className="navbar align-element">
@@ -41,7 +58,18 @@ export default function Navbar() {
 
         <div className="navbar-end">
           <div className="flex gap-x-4">
-            {/* <ThemeIcon /> */}
+            <label className="swap swap-rotate">
+              {/* this hidden checkbox controls the state */}
+              <input
+                type="checkbox"
+                onChange={handleTheme}
+                className="hidden"
+              />
+
+              <BsSunFill className="swap-on h-4 w-4" />
+              <BsMoonFill className="swap-off h-4 w-4" />
+            </label>
+
             {/* <CartIcon /> */}
             <NavLink
               to={"/carrinho"}
