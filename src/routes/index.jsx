@@ -12,6 +12,8 @@ import {
   Products,
   Register,
 } from "../pages";
+import { ErrorUIElement } from "../components";
+import { loader as landingLoader } from "../pages/Landing";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +24,8 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+        errorElement: <ErrorUIElement />,
+        loader: landingLoader,
       },
       {
         path: "produtos",

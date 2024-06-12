@@ -46,8 +46,8 @@ const heroImages = [
 
 export default function Hero() {
   return (
-    <div className="relative h-[40vh]">
-      <div className="absolute z-[100] flex flex-col left-0 sm:left-[100px] top-[100px] max-w-[600px] px-4 sm:px-0">
+    <div className="relative h-[50dvh]">
+      <div className="main-container absolute z-[100] flex flex-col left-0 right-0 top-0 bottom-0 m-auto max-w-[600px] px-4 sm:px-0 justify-center">
         <h1 className="text-4xl font-bold text-secondary-content">
           We’re changing the way people shop.
         </h1>
@@ -64,12 +64,12 @@ export default function Hero() {
         {heroImages.map((image) => (
           <div
             id={`slide${image.id}`}
-            className="carousel-item relative w-full after:content[''] after:absolute after:bg-black/50 after:w-full after:h-full after:top-0 after:left-0 after:z-10"
+            className="carousel-item relative w-full after:content[''] after:absolute after:bg-black/20 after:w-full after:h-full after:top-0 after:left-0 after:z-10"
             key={image.id}
           >
-            <img src={image.image} className="w-[inherit] object-cover " />
+            <img src={image.image} className="w-[inherit] object-cover" />
 
-            <div className="absolute  hidden sm:flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 z-30">
+            <div className="main-container absolute flex justify-between transform -translate-y-1/2 left-0 right-0 top-1/2 z-[500]">
               <a href={`#slide${image.arrows.prev}`} className="btn btn-circle">
                 ❮
               </a>

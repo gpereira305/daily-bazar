@@ -7,7 +7,7 @@ export default function HomeLayout() {
     <>
       <Header />
 
-      <main className="align-element px-8">
+      <main className=" ">
         <Outlet />
       </main>
     </>

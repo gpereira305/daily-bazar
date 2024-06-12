@@ -27,7 +27,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-base-200">
-      <div className="navbar align-element">
+      <div className="main-container navbar">
         <div className="navbar-start">
           {/* Title */}
           <NavLink
@@ -38,12 +38,12 @@ export default function Navbar() {
           </NavLink>
           {/* DROPDOWN */}
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden p-0">
               <FaBarsStaggered className="h-6 w-6" />
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52 gap-y-4"
+              className="menu menu-sm dropdown-content mt-3 sm:z-[1] z-[1000] p-2 shadow bg-base-200 rounded-box w-52 gap-y-4"
             >
               <NavLinks />
             </ul>
@@ -57,7 +57,7 @@ export default function Navbar() {
         </div>
 
         <div className="navbar-end">
-          <div className="flex gap-x-4">
+          <div className="flex gap-x-2">
             <label className="swap swap-rotate">
               {/* this hidden checkbox controls the state */}
               <input
@@ -73,7 +73,7 @@ export default function Navbar() {
             {/* <CartIcon /> */}
             <NavLink
               to={"/carrinho"}
-              className="btn btn-ghost btn-circle btn-md ml-4"
+              className="btn btn-ghost btn-circle btn-md"
             >
               <div className="indicator">
                 <BsCart3 className="h-6 w-6" />

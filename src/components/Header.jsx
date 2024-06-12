@@ -4,8 +4,8 @@ import Navbar from "./Navbar";
 
 export default function Header() {
   return (
-    <header className="py-2 px-8">
-      <div className="align-element flex justify-center sm:justify-end">
+    <header>
+      <div className="main-container flex justify-center sm:justify-end min-h-8">
         <div className="flex gap-x-6 justify-center items-center">
           <Link to="/login" className="link link-hover text-xs sm:text-sm">
             Entrar
