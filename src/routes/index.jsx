@@ -14,6 +14,7 @@ import {
 } from "../pages";
 import { ErrorUIElement } from "../components";
 import { loader as landingLoader } from "../pages/Landing";
+import { loader as productLoader } from "../pages/Product";
 
 export const router = createBrowserRouter([
   {
@@ -32,8 +33,10 @@ export const router = createBrowserRouter([
         element: <Products />,
       },
       {
-        path: "produtos/:id",
+        path: "products/:id",
         element: <Product />,
+        errorElement: <ErrorUIElement />,
+        loader: productLoader,
       },
       {
         path: "carrinho",
