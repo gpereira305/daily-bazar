@@ -8,9 +8,20 @@ export const customFetch = axios.create({
 
 // format price to BRL
 export const formatPrice = (price) => {
-  const dollarsAmount = new Intl.NumberFormat("pt-BR", {
+  const realsAmount = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
   }).format((price / 100).toFixed(2));
-  return dollarsAmount;
+  return realsAmount;
+};
+
+export const generateAmountOptions = (number) => {
+  return Array.from({ length: number }, (_, index) => {
+    const amount = index + 1;
+    return (
+      <option key={amount} value={amount}>
+        {amount}
+      </option>
+    );
+  });
 };

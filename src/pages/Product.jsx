@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { customFetch, formatPrice } from "../utils";
+import { customFetch, formatPrice, generateAmountOptions } from "../utils";
 import { useLoaderData } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 
@@ -13,6 +13,11 @@ export default function Product() {
     product.attributes;
   const [productColor, setProductColor] = useState(colors[0]);
   const RealFormattedPrice = formatPrice(price);
+
+  function handleAmout(e) {
+    e.preventDefault();
+    setProductColor(e.target.value);
+  }
 
   return (
     <div className="main-container">
@@ -33,7 +38,7 @@ export default function Product() {
         <section className="w-full">
           <h2 className="uppercase text-3xl font-bold">{title}</h2>
           <div className="mt-3 mb-4">
-            <h3 className="text-xl base-100 font-bold  ">
+            <h3 className="text-xl base-100 font-bold">
               Marca:{" "}
               <span className="text-base text-md font-semibold text-gray-400">
                 {company}
@@ -56,7 +61,7 @@ export default function Product() {
           </h4>
 
           <div className="mt-6">
-            <h5 className="text-xl base-100 font-bold">Colors:</h5>
+            <h5 className="text-xl base-100 font-bold">Colores:</h5>
             <div className="mt-2">
               {colors.map((color) => {
                 return (
@@ -72,6 +77,28 @@ export default function Product() {
                 );
               })}
             </div>
+
+            <form
+              className="form-control w-full max-w-xs"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <label className="label">
+                <h4 className="text-md font-medium tracking-wider capitalize">
+                  Qunatidade:
+                </h4>
+              </label>
+              <select
+                className="select select-secondary select-bordered select-md mb-5"
+                value={productColor}
+                onChange={handleAmout}
+              >
+                {generateAmountOptions(10)}
+              </select>
+
+              <button className="btn btn-secondary btn-md" type="submit">
+                Adiciar ao carrinho
+              </button>
+            </form>
           </div>
 
           <p className="text-sm font-normal mt-6 font-serif leading-6  text-gray-400 tracking-wider mb-8">
