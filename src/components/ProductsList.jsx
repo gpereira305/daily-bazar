@@ -5,7 +5,10 @@ export default function ProductsList() {
   const { products } = useLoaderData();
 
   return (
-    <div className="main-container pt-12 grid gap-y-8">
+    <div
+      className="main-container pt-12 grid gap-y-8"
+      style={{ paddingTop: "30px", paddingBottom: "30px" }}
+    >
       {products?.map(({ id, attributes: { title, price, image, company } }) => (
         <Link
           className="card flex min-[480px]:flex-row flex-col w-full shadow-xl"

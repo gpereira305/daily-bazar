@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function FormInput({ label, name, type, defaultValue }) {
+export default function FormInput({ label, name, type, defaultValue, size }) {
   return (
-    <div className="form-control">
+    <div className="form-control relative">
       <label className="label">
         <span className="label-text">{label}</span>
       </label>
@@ -10,7 +10,7 @@ export default function FormInput({ label, name, type, defaultValue }) {
         type={type}
         name={name}
         defaultValue={defaultValue}
-        className="input input-bordered"
+        className={`input input-bordered ${size}`}
       />
     </div>
   );
