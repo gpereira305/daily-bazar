@@ -4,20 +4,21 @@ import { FiSearch } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
+import FormRange from "./FormRange";
+import FormCheckbox from "./FormCheckbox";
 
 export default function Filters() {
-  const { info } = useLoaderData();
+  const { info, params } = useLoaderData();
+  const { search, company, category, shipping, order, price } = params;
 
   return (
-    <Form
-      className="main-container grid bg-base-200 rounded-md gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center text-center w-full"
-      style={{ paddingTop: "30px", paddingBottom: "30px" }}
-    >
+    <Form className="max-w-[1440px] mx-auto grid bg-base-200 rounded-md gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center text-center w-full py-8 px-8 my-8 sm:my-14">
       <FormInput
         type="search"
         label="Pesquisar produto"
         name="search"
         size={"input-sm"}
+        defaultValue={search}
       />
 
       <FormSelect
@@ -25,6 +26,7 @@ export default function Filters() {
         name="category"
         list={info?.categories}
         size={"select-sm"}
+        defaultValue={category}
       />
 
       <FormSelect
@@ -32,6 +34,7 @@ export default function Filters() {
         name="company"
         list={info?.companies}
         size={"select-sm"}
+        defaultValue={company}
       />
 
       <FormSelect
@@ -39,6 +42,23 @@ export default function Filters() {
         name="order"
         list={["a-z", "z-a", "high", "low"]}
         size={"select-sm"}
+        defaultValue={order}
+      />
+
+      <FormRange
+        label="Selecionar preço"
+        name="price"
+        size={"range-sm"}
+        min={0}
+        max={100000}
+        price={price}
+      />
+
+      <FormCheckbox
+        label="Frete grátis"
+        name="shipping"
+        size={"checkbox-sm"}
+        defaultValue={shipping}
       />
 
       <button className="btn btn-primary btn-sm" type="submit">
@@ -46,7 +66,7 @@ export default function Filters() {
         Buscar
       </button>
 
-      <Link to="/products" className="btn btn-primary btn-sm">
+      <Link to="/produtos" className="btn btn-primary btn-sm">
         <RxCross2 />
         Limpar filtros
       </Link>

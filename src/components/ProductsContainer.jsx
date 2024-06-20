@@ -20,16 +20,18 @@ export default function PaginationContainer() {
     localStorage.setItem("layout", newLayout);
   }
 
+  const pluralText = totalProducts > 1 ? "s" : "";
+
   return (
     <>
       <section
         className="main-container flex justify-between items-center border-b border-base-300"
-        style={{ paddingBottom: "20px" }}
+        style={{ paddingBottom: "40px" }}
       >
-        <h2
-          className={`text-xl sm:text-2xl font-medium tracking-wider capitalize`}
-        >
-          {totalProducts} produto{totalProducts > 1 ? "s" : ""}
+        <h2 className={`text-xl sm:text-2xl font-medium tracking-wider`}>
+          {totalProducts > 0
+            ? `${totalProducts} Produto${pluralText}`
+            : "Nenhum produto encontrado"}{" "}
         </h2>
 
         <div className="btn-group">
@@ -59,7 +61,11 @@ export default function PaginationContainer() {
       </section>
 
       {totalProducts === 0 ? (
-        <h3 className="text-center text-3xl">Nenhum resultado encontrado...</h3>
+        <div className="main-container flex items-center justify-center min-h-[40dvh]">
+          <h3 className="text-center text-3xl">
+            Nenhum resultado encontrado...
+          </h3>
+        </div>
       ) : layout === "grid" ? (
         <ProductsGrid />
       ) : (
