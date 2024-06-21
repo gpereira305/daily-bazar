@@ -9,7 +9,6 @@ export default function HomeLayout() {
   return (
     <>
       <Header />
-
       <main>{isPageLoading ? <Loading /> : <Outlet />}</main>
     </>
   );
