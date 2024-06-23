@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         loader: landingLoader,
       },
       {
-        path: "produtos",
+        path: "products",
         element: <Products />,
         errorElement: <ErrorUIElement />,
         loader: productsLoader,

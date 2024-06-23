@@ -3,19 +3,14 @@ import React from "react";
 export default function About() {
   const textContentStyle = `mt-6 text-base leading-normal font-semibold text-light font-sans`;
   return (
-    <>
+    <div className="main-container mt-20">
       <div className="flex items-center justify-center gap-2 sm:gap-x-6">
-        <h1 className="text-4xl font-bold leading-none tracking-tight sm:text-6xl">
+        <h1 className="text-4xl font-bold leading-none tracking-tight sm:text-6xl flex sm:flex-row flex-col items-center gap-2">
           Sobre a
+          <span className="stats block bg-primary shadow stat-title p-2 text-primary-content text-4xl font-bold tracking-widest">
+            Daily Bazar
+          </span>
         </h1>
-
-        <div className="stats bg-primary shadow">
-          <div className="stat">
-            <div className="stat-title text-primary-content text-4xl font-bold tracking-widest">
-              Daily Bazar
-            </div>
-          </div>
-        </div>
       </div>
 
       <p className={textContentStyle} style={{ marginTop: "100px" }}>
@@ -98,59 +93,6 @@ export default function About() {
         consequuntur minima eos quasi sed aliquam, nisi aliquid quidem qui
         consectetur saepe voluptatum possimus odit repellat et ad,
       </p>
-
-      <p className={textContentStyle}>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum assumenda
-        iste provident nemo laudantium quam officiis, minima saepe, id, sit
-        quaerat non aut asperiores aperiam fugit. Dolor, pariatur vel optio amet
-        iusto aliquam odit dolorum molestiae possimus tenetur molestias culpa
-        quisquam excepturi nulla fugiat nostrum eos doloremque repudiandae
-        officia. Repellat nemo vel placeat incidunt eum ipsam delectus saepe
-        voluptates ab commodi deserunt perferendis accusamus non id pariatur
-        debitis dignissimos, ipsum obcaecati nisi, nobis quod. Exercitationem
-        dolorem nihil, sit dolore magnam saepe? Vel et nam atque minus
-        dignissimos id dolorem, at debitis recusandae laudantium. Tempore
-        doloribus iste labore ipsum dolorum maiores, magnam voluptate magni
-        autem nihil quidem, atque fuga eveniet adipisci architecto. Natus
-        quisquam dolorum accusamus a optio fugit, sequi temporibus quidem totam,
-        exercitationem dolores itaque. Unde nobis labore, officia quidem vero
-        natus esse magnam alias expedita nulla repudiandae, eius iste aspernatur
-        modi accusamus dignissimos quaerat aperiam sed distinctio maiores
-        quibusdam! Numquam, voluptate. Quas officiis a reprehenderit non
-        asperiores sit ex ipsum debitis atque suscipit quidem corrupti totam
-        assumenda amet, fugit nesciunt magni, maiores voluptas labore neque
-        voluptates excepturi incidunt similique! Corporis alias esse libero
-        perferendis porro ducimus modi dicta illum atque? Illo perspiciatis
-        iusto animi quasi, ad facere suscipit dolor, nam saepe eaque soluta?
-        Fugiat quisquam velit, exercitationem unde laborum non obcaecati debitis
-        cumque eius saepe perspiciatis impedit provident corporis accusantium
-        consequatur quidem dicta recusandae! Neque qui rerum dolorum, veniam
-        cupiditate, unde illo ab nemo obcaecati provident minima officia
-        accusantium sunt, incidunt ipsum totam iste maxime ipsam! Distinctio
-        iste commodi, debitis obcaecati eos voluptates consequuntur quae
-        cupiditate ut quas, natus optio tempore perspiciatis quaerat inventore
-        veniam unde, recusandae neque quo alias. Quibusdam delectus voluptas
-        molestias officiis quia dignissimos dolores architecto dolorem est
-        expedita ipsam temporibus reiciendis animi facere, sapiente deserunt
-        officia. Facilis, deleniti? Odit aperiam architecto necessitatibus,
-        tempora inventore voluptatem molestias error quas et porro nam sequi
-        laboriosam ipsum saepe exercitationem quia consequuntur officiis
-        consectetur, incidunt impedit ratione illum at! Dolores eos iure maxime
-        aspernatur accusamus, inventore ipsa id, hic nostrum laborum
-        voluptatibus ad dicta maiores eum repellendus doloremque qui ut eius
-        possimus ducimus iusto praesentium! Recusandae aut hic possimus ipsum,
-        pariatur itaque ea expedita iste quos necessitatibus maxime molestias
-        sapiente alias saepe, porro modi nihil? Iusto, officia minus, commodi
-        deserunt fugit delectus non amet facere pariatur repellendus temporibus
-        natus molestias quos illo et necessitatibus? Vitae modi ex neque fuga
-        suscipit obcaecati reprehenderit tenetur exercitationem assumenda
-        distinctio qui, recusandae ipsam. Assumenda, nulla blanditiis
-        perferendis quibusdam quod quas eveniet molestiae, obcaecati saepe quos,
-        deleniti a accusamus consequuntur id provident earum? Nisi rem ipsam,
-        impedit eveniet dicta neque aut hic, accusantium earum tempore fugiat
-        nihil officia tenetur fugit dolore ipsum! Enim in repellat ratione nisi
-        nulla impedit obcaecati mollitia praesentium. Ipsum, aperiam.
-      </p>
-    </>
+    </div>
   );
 }

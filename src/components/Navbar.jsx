@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { BsCart3, BsMoonFill, BsSunFill } from "react-icons/bs";
 import NavLinks from "./NavLinks";
@@ -13,6 +14,9 @@ const getSavedTheme = () => localStorage.getItem("theme") || themes.corporate;
 
 export default function Navbar() {
   const [theme, setTheme] = useState(getSavedTheme());
+  const cartItemsCounter = useSelector(
+    (state) => state.cartState.numItemsInCart || 0
+  );
 
   const handleTheme = () => {
     const { corporate, business } = themes;
@@ -78,7 +82,7 @@ export default function Navbar() {
               <div className="indicator">
                 <BsCart3 className="h-6 w-6" />
                 <span className="badge badge-sm badge-primary indicator-item">
-                  0
+                  {cartItemsCounter}
                 </span>
               </div>
             </NavLink>

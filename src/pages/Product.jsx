@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { customFetch, formatPrice, generateAmountOptions } from "../utils";
 import { useLoaderData } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItem } from "../features/cart/cartSlice";
 import Breadcrumb from "../components/Breadcrumb";
 
 export const loader = async ({ params }) => {
@@ -12,12 +14,32 @@ export default function Product() {
   const { name, title, description, image, price, colors, category, company } =
     product.attributes;
   const [productColor, setProductColor] = useState(colors[0]);
+  const [amount, setAmount] = useState(1);
   const RealFormattedPrice = formatPrice(price);
 
   function handleAmout(e) {
     e.preventDefault();
-    setProductColor(e.target.value);
+    setAmount(parseInt(e.target.value));
+    // setProductColor(e.target.value);
   }
+
+  const cartproduct = {
+    cartID: product.id + productColor,
+    productID: product.id,
+    image,
+    title,
+    price,
+    amount,
+    productColor,
+    company,
+  };
+
+  const dispatch = useDispatch();
+
+  const addToCart = (e) => {
+    e.preventDefault();
+    dispatch(addItem({ product: cartproduct }));
+  };
 
   return (
     <div className="main-container">
@@ -78,10 +100,7 @@ export default function Product() {
               })}
             </div>
 
-            <form
-              className="form-control w-full max-w-xs"
-              onSubmit={(e) => e.preventDefault()}
-            >
+            <form className="form-control w-full max-w-xs" onSubmit={addToCart}>
               <label className="label">
                 <h4 className="text-md font-medium tracking-wider capitalize">
                   Qunatidade:
@@ -89,14 +108,14 @@ export default function Product() {
               </label>
               <select
                 className="select select-secondary select-bordered select-md mb-5"
-                value={productColor}
+                value={amount}
                 onChange={handleAmout}
               >
                 {generateAmountOptions(10)}
               </select>
 
               <button className="btn btn-secondary btn-md" type="submit">
-                Adiciar ao carrinho
+                Adicionar ao carrinho
               </button>
             </form>
           </div>
