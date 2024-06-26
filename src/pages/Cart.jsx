@@ -14,9 +14,8 @@ export default function Cart() {
         text={`${numItemsInCart === 0 ? "Carrinho vazio" : "carrinho"}`}
       />
       <div className="main-container mt-8 grid gap-8 lg:grid-cols-12">
-        <div className="lg:col-span-8">
-          <CartItemsList />
-        </div>
+        <CartItemsList />
+
         <div className="lg:col-span-4 lg:pl-4">
           <CartTotals />
           {user ? (
