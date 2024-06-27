@@ -23,8 +23,7 @@ const cartSlice = createSlice({
       if (item) {
         item.amount += product.amount;
       } else {
-        // state.cartItems.push(product);
-        state.cartItems.push({ ...product, amount: 1 });
+        state.cartItems.push(product);
       }
       state.numItemsInCart += product.amount;
       state.cartTotal += product.price * product.amount;
@@ -46,8 +45,8 @@ const cartSlice = createSlice({
     },
     editItem: (state, action) => {
       const { cartID, amount } = action.payload;
-      const item = state.cartItems.find((it) => it.cartID === cartID);
-      state.cartTotal += item.price - item.amount;
+      const item = state.cartItems.find((i) => i.cartID === cartID);
+      state.numItemsInCart += amount - item.amount;
       state.cartTotal += item.price * (amount - item.amount);
       item.amount = amount;
       cartSlice.caseReducers.calculateTotals(state);
@@ -55,7 +54,7 @@ const cartSlice = createSlice({
     },
     calculateTotals: (state) => {
       state.tax = 0.1 * state.cartTotal;
-      state.orderTotal = state.cartTotal + +state.shipping + state.tax;
+      state.orderTotal = state.cartTotal + state.shipping + state.tax;
       localStorage.setItem("cartItem", JSON.stringify(state));
     },
   },

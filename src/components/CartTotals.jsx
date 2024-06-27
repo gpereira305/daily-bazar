@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { formatPrice } from "../utils";
 
 export default function CartTotals() {
-  const { cartTotal } = useSelector((state) => state.cartState);
+  const { cartTotal } = useSelector((state) => state.cartState || 0);
 
   return (
     <div className="card bg-base-200">
@@ -20,7 +20,7 @@ export default function CartTotals() {
         </p>
         {/* TOTAL */}
         <p className="flex justify-between text-lg font-bold">
-          <span>Total</span>
+          <span>Total à vista:</span>
           <span>{formatPrice(cartTotal)}</span>
         </p>
       </div>

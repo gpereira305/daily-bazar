@@ -14,9 +14,6 @@ const getSavedTheme = () => localStorage.getItem("theme") || themes.corporate;
 
 export default function Navbar() {
   const [theme, setTheme] = useState(getSavedTheme());
-  const cartItemsCounter = useSelector(
-    (state) => state.cartState.numItemsInCart || 0
-  );
 
   const handleTheme = () => {
     const { corporate, business } = themes;
@@ -28,6 +25,10 @@ export default function Navbar() {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  const numItemsInCart = useSelector(
+    (state) => state.cartState.numItemsInCart || 0
+  );
 
   return (
     <nav className="bg-base-200">
@@ -75,14 +76,11 @@ export default function Navbar() {
             </label>
 
             {/* <CartIcon /> */}
-            <NavLink
-              to={"/carrinho"}
-              className="btn btn-ghost btn-circle btn-md"
-            >
+            <NavLink to="/carrinho" className="btn btn-ghost btn-circle btn-md">
               <div className="indicator">
                 <BsCart3 className="h-6 w-6" />
                 <span className="badge badge-sm badge-primary indicator-item">
-                  {cartItemsCounter}
+                  {numItemsInCart}
                 </span>
               </div>
             </NavLink>
