@@ -1,30 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { BsCart3, BsMoonFill, BsSunFill } from "react-icons/bs";
 import NavLinks from "./NavLinks";
-
-const themes = {
-  corporate: "corporate",
-  business: "business",
-};
-
-const getSavedTheme = () => localStorage.getItem("theme") || themes.corporate;
+import { toggleTheme } from "../features/user/userSlice";
 
 export default function Navbar() {
-  const [theme, setTheme] = useState(getSavedTheme());
-
-  const handleTheme = () => {
-    const { corporate, business } = themes;
-    const newTheme = theme === corporate ? business : corporate;
-    setTheme(newTheme);
-  };
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  const dispatch = useDispatch();
+  const handleTheme = () => dispatch(toggleTheme());
 
   const numItemsInCart = useSelector(
     (state) => state.cartState.numItemsInCart || 0
@@ -64,7 +48,6 @@ export default function Navbar() {
         <div className="navbar-end">
           <div className="flex gap-x-2">
             <label className="swap swap-rotate">
-              {/* this hidden checkbox controls the state */}
               <input
                 type="checkbox"
                 onChange={handleTheme}
