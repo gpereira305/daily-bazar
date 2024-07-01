@@ -1,6 +1,28 @@
 import React from "react";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import { FormInput, SubmitButton } from "../components";
+import { customFetch } from "../utils";
+import { toast } from "react-toastify";
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    const response = await customFetch.post("/auth/local/register", data);
+    toast.success("Conta criada com sucesso!");
+    return redirect("/login");
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.error?.message ||
+        "Confira suas credenciais e tente novamente."
+    );
+
+    return null;
+  }
+
+  return response.data;
+};
 
 export default function Register() {
   return (
