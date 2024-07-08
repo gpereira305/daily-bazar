@@ -9,7 +9,8 @@ export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.userState.user);
+  const userState = useSelector((state) => state.userState);
+  const { user } = userState || {};
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -23,7 +24,7 @@ export default function Header() {
         <div className="flex gap-x-6 justify-center items-center">
           {user ? (
             <div className="flex gap-x-2 sm:gap-x-8 items-center">
-              <p className="text-xs sm:text-sm">Olá, {user.username}</p>
+              <p className="text-xs sm:text-sm">Olá, {user?.username}</p>
               <button
                 className="btn btn-xs btn-outline btn-primary"
                 onClick={handleLogout}

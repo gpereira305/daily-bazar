@@ -7,7 +7,6 @@ export const loader = async ({ request }) => {
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
   ]);
-  console.log(params);
   const res = await customFetch(url, { params });
   const products = res.data.data;
   const info = res.data.meta;

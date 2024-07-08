@@ -1,9 +1,10 @@
 import React from "react";
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { FormInput, SubmitButton } from "../components";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
 import { loginUser } from "../features/user/userSlice";
+import { useDispatch } from "react-redux";
 
 export const action =
   (store) =>
@@ -13,7 +14,7 @@ export const action =
 
     try {
       const response = await customFetch.post("/auth/local", data);
-      store.dispatch(loginUser(response.data.user));
+      store.dispatch(loginUser(response.data));
       toast.success("Login efetuado com sucesso!");
       return redirect("/");
     } catch (error) {
@@ -26,6 +27,25 @@ export const action =
   };
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const loginAsAGuest = async () => {
+    try {
+      const response = await customFetch.post("/auth/local", {
+        identifier: "test@test.com",
+        password: "secret",
+      });
+
+      dispatch(loginUser(response.data));
+      toast.success("Login de usuário convidado feito com sucesso!");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      toast.error("Erro ao logar. Tente novamente!");
+    }
+  };
+
   return (
     <div className="h-screen grid place-items-center">
       <Form
@@ -35,22 +55,26 @@ export default function Login() {
         <h4 className="text-center text-3xl font-bold">Login</h4>
         <FormInput
           type="email"
-          label="Seu e-mail"
+          label="Email"
           name="identifier"
-          defaultValue="test@test.com"
+          placeholder={"Seu e-mail"}
         />
 
         <FormInput
           type="password"
-          label="Sua senha"
+          label="Senha"
           name="password"
-          defaultValue="secret"
+          placeholder={"Sua senha"}
         />
 
         <div className="mt-4">
           <SubmitButton text="Login" />
         </div>
-        <button type="button" className="btn btn-secondary btn-link">
+        <button
+          type="button"
+          className="btn btn-secondary btn-link"
+          onClick={loginAsAGuest}
+        >
           Entrar como convidado
         </button>
 

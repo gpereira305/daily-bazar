@@ -1,195 +1,218 @@
 import React, { useMemo, useState } from "react";
+import { users } from "../../data";
+import { useForm } from "react-hook-form";
 
-const Orders = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortColumn, setSortColumn] = useState("account");
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [page, setPage] = useState(1);
+export default function Orders() {
+  const pageSize = 6; // Number of orders to display per page
+  const [ordersCopy, setOrdersCopy] = useState(users); // Copy of the user data
+  const [page, setPage] = useState(0); // Current page number
+  const [searchText, setSearchText] = useState(""); // Search text input
+  const [editModalOpen, setEditModalOpen] = useState(false); // Edit modal state
+  const [editingOrder, setEditingOrder] = useState(null); // Editing order state
+  const { register, handleSubmit, reset } = useForm(); // Form state
 
-  const itemsPerPage = 3;
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const sortedOrders = useMemo(() => {
-    const ordersCopy = [
-      {
-        account: "Toby",
-        dueDate: "04/01/2011",
-        amount: "$100",
-        period: "03/01/2011",
-      },
-      {
-        account: "Marcus",
-        dueDate: "04/01/2012",
-        amount: "$200",
-        period: "03/19/2012",
-      },
-      {
-        account: "Theresa",
-        dueDate: "04/01/2013",
-        amount: "$300",
-        period: "12/04/2017",
-      },
-      {
-        account: "Virginia",
-        dueDate: "04/01/2014",
-        amount: "$400",
-        period: "23/07/2001",
-      },
-      {
-        account: "Mariza",
-        dueDate: "04/01/2015",
-        amount: "$500",
-        period: "06/11/2013",
-      },
-      {
-        account: "Claudia",
-        dueDate: "04/01/2016",
-        amount: "$600",
-        period: "03/21/2018",
-      },
-    ];
-
-    return ordersCopy
-      .sort((a, b) => {
-        const columnA = a[sortColumn].toLowerCase();
-        const columnB = b[sortColumn].toLowerCase();
-        if (sortOrder === "asc") {
-          return columnA.localeCompare(columnB);
-        }
-        return columnB.localeCompare(columnA);
-      })
-      .filter((order) =>
-        order.account.toLowerCase().includes(searchTerm.toLowerCase())
+  // Function to delete an order
+  const handleDelete = (order) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      const updatedOrders = ordersCopy?.filter(
+        (item) => item.account !== order.account
       );
-  }, [sortColumn, sortOrder, searchTerm, page]);
-
-  const totalItems = sortedOrders.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setPage(newPage);
+      setOrdersCopy(updatedOrders);
     }
   };
 
-  return (
-    <div className="main-container mt-24">
-      {/* search and sort */}
-      <div className="flex justify-between">
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-          className="p-2 border border-gray-300 rounded-md mb-4"
-        />
-        <select
-          value={sortColumn}
-          onChange={(event) => setSortColumn(event.target.value)}
-          className="p-2 border border-gray-300 rounded-md mb-4"
-        >
-          <option value="account">Account</option>
-          <option value="dueDate">Due Date</option>
-          <option value="amount">Amount</option>
-          <option value="period">Period</option>
-        </select>
-      </div>
-      {/* table */}
-      <table>
-        <caption>Statement Summary</caption>
-        <thead>
-          <tr>
-            <th
-              scope="col"
-              onClick={() => setSortColumn("account")}
-              className={`cursor-pointer ${
-                sortColumn === "account" ? `text-blue-500` : ""
-              }`}
-            >
-              Account
-            </th>
-            <th
-              scope="col"
-              onClick={() => setSortColumn("dueDate")}
-              className={`cursor-pointer ${
-                sortColumn === "dueDate" ? `text-blue-500` : ""
-              }`}
-            >
-              Due Date
-            </th>
-            <th
-              scope="col"
-              onClick={() => setSortColumn("amount")}
-              className={`cursor-pointer ${
-                sortColumn === "amount" ? `text-blue-500` : ""
-              }`}
-            >
-              Amount
-            </th>
-            <th
-              scope="col"
-              onClick={() => setSortColumn("period")}
-              className={`cursor-pointer ${
-                sortColumn === "period" ? `text-blue-500` : ""
-              }`}
-            >
-              Period
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedOrders.slice(startIndex, endIndex).map((order, index) => (
-            <tr key={index}>
-              <td data-label="Account">{order.account}</td>
-              <td data-label="Due Date">{order.dueDate}</td>
-              <td data-label="Amount">{order.amount}</td>
-              <td data-label="Period">{order.period}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  // Filter orders based on search text
+  const filteredOrders = useMemo(() => {
+    const lowerSearchText = searchText.toLowerCase(); // Convert search text to lowercase
+    return (
+      ordersCopy?.filter((order) =>
+        // Check if any of the order properties (account, dueDate, amount) contain the search text
+        [order.account, order.dueDate, order.amount].some(
+          (value) => value?.toLowerCase?.()?.includes(lowerSearchText) // Check if value is truthy and lowercase includes search text
+        )
+      ) || []
+    );
+  }, [searchText, ordersCopy]);
 
-      {/* pagination */}
-      <nav className="mt-4">
-        <ul className="flex gap-1">
-          <li className="p-2 bg-slate-900 text-white">
-            <button
-              disabled={page === 1}
-              onClick={() => handlePageChange(page - 1)}
-              className={page === 1 ? "opacity-50" : ""}
-            >
-              Prev
-            </button>
-          </li>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <li
-              key={index}
-              className={`p-2  text-white ${
-                index + 1 === page ? "bg-red-500" : "bg-slate-900"
-              }`}
-            >
-              <button
-                onClick={() => handlePageChange(index + 1)}
-                disabled={index + 1 === totalPages && page === totalPages}
-              >
-                {index + 1}
-              </button>
-            </li>
-          ))}
-          <li className="p-2 bg-slate-900 text-white">
-            <button
-              disabled={page === totalPages}
-              onClick={() => handlePageChange(page + 1)}
-              className={page === totalPages ? "opacity-50 " : ""}
-            >
-              Next
-            </button>
-          </li>
-        </ul>
-      </nav>
+  // Display orders based on current page and page size
+  const displayedOrders = useMemo(() => {
+    const start = page * pageSize; // Start index of the current page
+    const end = start + pageSize; // End index of the current page
+    return filteredOrders.slice(start, end); // Slice the filtered orders based on start and end indices
+  }, [page, pageSize, filteredOrders]);
+
+  // Calculate the number of pages based on the filtered orders and page size
+  const pageCount = useMemo(
+    () => Math.ceil(filteredOrders.length / pageSize) || 0, // Calculate the number of pages by dividing the length of filtered orders by the page size and rounding up
+    [filteredOrders.length, pageSize]
+  );
+
+  // Function to handle editing an order
+  const handleEdit = (order) => {
+    setEditingOrder(order); // Set the editing order state to the selected order
+    setEditModalOpen(true); // Open the edit modal
+  };
+
+  // Function to handle submitting the edited order
+  const handleEditSubmit = (data) => {
+    const updatedOrders =
+      ordersCopy?.map(
+        (order) =>
+          order.account === editingOrder?.account // Check if the order being edited matches the account property of the order in the ordersCopy array
+            ? { ...order, ...data } // If it matches, return a new object with the updated order properties
+            : order // If it doesn't match, return the original order
+      ) || [];
+    reset(); // Reset the form state
+    setEditModalOpen(false); // Close the edit modal
+    setEditingOrder(null); // Clear the editing order state
+    setOrdersCopy(updatedOrders); // Update the ordersCopy state with the updated orders
+  };
+
+  return (
+    <div className="p-4 max-w-[1200px] mx-auto mt-20">
+      <input
+        type="text"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        placeholder="Search..."
+        className="w-full p-2 mb-4"
+      />
+      {!ordersCopy || pageCount === 0 ? (
+        <div className="p-4 max-w-[1200px] mx-auto mt-20">
+          No orders available
+        </div>
+      ) : (
+        <>
+          <table className="table">
+            <thead>
+              <tr>
+                <th className="text-black text-base">ID</th>
+                <th className="text-black text-base">Name</th>
+                <th className="text-black text-base">Price</th>
+                <th className="text-black text-base">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {displayedOrders.map((item, index) => (
+                <tr key={index}>
+                  <td className="text-black">{item.account}</td>
+                  <td className="text-black">{item.dueDate}</td>
+                  <td className="text-black">{item.amount}</td>
+                  <td className="flex gap-4 justify-center">
+                    <button
+                      className="text-blue-500"
+                      onClick={() => handleEdit(item)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="text-red-500"
+                      onClick={() => handleDelete(item)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Pagination */}
+          <Pagination page={page} setPage={setPage} pageCount={pageCount} />
+
+          {/*  Edit Modal */}
+          {editModalOpen && editingOrder && (
+            <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+              <div className="bg-white p-4 rounded">
+                <form onSubmit={handleSubmit(handleEditSubmit)}>
+                  <label className="block mb-2">
+                    Account:
+                    <input
+                      type="text"
+                      {...register("account", { required: true })}
+                      defaultValue={editingOrder.account}
+                      className="block w-full p-2 border border-gray-300 border-solid rounded mt-1"
+                    />
+                  </label>
+                  <label className="block mb-2">
+                    Due Date:
+                    <input
+                      type="text"
+                      {...register("dueDate", { required: true })}
+                      defaultValue={editingOrder.dueDate}
+                      className="block w-full p-2 border border-gray-300 border-solid rounded mt-1"
+                    />
+                  </label>
+                  <label className="block mb-2">
+                    Amount:
+                    <input
+                      type="number"
+                      {...register("amount", { required: true })}
+                      defaultValue={editingOrder.amount}
+                      className="block w-full p-2 border border-gray-300 border-solid rounded mt-1"
+                    />
+                  </label>
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="bg-gray-500 text-white px-4 py-2 rounded mt-4 ml-2"
+                    onClick={() => {
+                      setEditModalOpen(false);
+                      setEditingOrder(null);
+                      reset();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+const Pagination = ({ page, setPage, pageCount }) => {
+  return (
+    <div className="flex justify-center mt-4 gap-2">
+      <button
+        className={`px-4 py-2 rounded-
+        md ${page === 0 ? "bg-gray-300" : "bg-blue-500 text-white"}`}
+        disabled={page === 0}
+        onClick={() => setPage(Math.max(0, page - 1))}
+      >
+        Previous
+      </button>
+      {Array.from({ length: pageCount }, (_, index) => index + 1).map(
+        (pageNumber) => (
+          <button
+            key={pageNumber}
+            className={`px-4 py-2 rounded-md ${
+              pageNumber === page + 1 ? "bg-blue-500 text-white" : "bg-gray-300"
+            }`}
+            onClick={() => setPage(pageNumber - 1)}
+          >
+            {pageNumber}
+          </button>
+        )
+      )}
+
+      <button
+        className={`px-4 py-2 rounded-md ${
+          page === pageCount - 1 ? "bg-gray-300" : "bg-blue-500 text-white"
+        }`}
+        disabled={page === pageCount - 1}
+        onClick={() => setPage(Math.min(pageCount - 1, page + 1))}
+      >
+        Next
+      </button>
     </div>
   );
 };
-
-export default Orders;
