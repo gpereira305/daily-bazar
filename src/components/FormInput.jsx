@@ -19,6 +19,7 @@ export default function FormInput({
         defaultValue={defaultValue}
         className={`input input-bordered ${size}`}
         placeholder={placeholder}
+        autoComplete="off"
       />
     </div>
   );
