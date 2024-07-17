@@ -15,7 +15,7 @@ export default function CartTotals() {
         </p>
         {/* FRETE */}
         <p className="flex justify-between text-xs border-b border-base-300 pb-2">
-          <span>Shipping</span>
+          <span>Frete</span>
           <span className="font-medium">Grátis</span>
         </p>
         {/* TOTAL */}

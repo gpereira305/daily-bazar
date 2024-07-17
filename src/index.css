@@ -43,7 +43,7 @@ table caption {
 }
 
 table tr {
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
   border: 1px solid #ddd;
   padding: 0.35em;
 }

@@ -17,6 +17,7 @@ import { loader as landingLoader } from "../pages/Landing";
 import { loader as productLoader } from "../pages/Product";
 import { loader as productsLoader } from "../pages/Products";
 import { loader as checkoutLoader } from "../pages/Checkout";
+import { loader as ordersLoader } from "../pages/Orders";
 
 import { action as registerAction } from "../pages/Register";
 import { action as loginAction } from "../pages/Login";
@@ -64,6 +65,7 @@ export const router = createBrowserRouter([
       {
         path: "pedidos",
         element: <Orders />,
+        loader: ordersLoader(store),
       },
     ],
   },

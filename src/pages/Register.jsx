@@ -5,11 +5,11 @@ import { customFetch } from "../utils";
 import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-
   try {
-    const response = await customFetch.post("/auth/local/register", data);
+    const response = await customFetch.post(
+      "/auth/local/register",
+      await request.formData()
+    );
     toast.success("Conta criada com sucesso!");
     return redirect("/login");
   } catch (error) {
@@ -20,8 +20,6 @@ export const action = async ({ request }) => {
 
     return null;
   }
-
-  return response.data;
 };
 
 export default function Register() {
@@ -41,7 +39,7 @@ export default function Register() {
         </div>
 
         <p className="text-center">
-          Ja possui uma conta?{" "}
+          Já possui uma conta?{" "}
           <Link className="link link-hover link-primary" to="/login">
             Entrar
           </Link>

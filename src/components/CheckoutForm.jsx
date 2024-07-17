@@ -18,13 +18,12 @@ export const action =
       chargeTotal: orderTotal,
       orderTotal: formatPrice(orderTotal),
       cartItems,
-      orderTotal,
       numItemsInCart,
     };
 
     try {
       const response = await customFetch.post(
-        "/pedidos",
+        "/orders",
         { data: info },
         {
           headers: {
@@ -40,6 +39,9 @@ export const action =
         error?.response?.data?.error?.message ||
           "Confira suas credenciais e tente novamente."
       );
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
+        return redirect("/login");
+      }
       return null;
     }
   };

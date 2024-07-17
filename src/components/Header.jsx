@@ -38,7 +38,7 @@ export default function Header() {
                 Logar
               </Link>
               <Link
-                to="/register"
+                to="/cadastro"
                 className="link link-hover text-xs sm:text-sm"
               >
                 Criar conta
