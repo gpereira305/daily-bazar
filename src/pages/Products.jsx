@@ -9,10 +9,10 @@ export const loader = async ({ request }) => {
   ]);
   const res = await customFetch(url, { params });
   const products = res.data.data;
-  const info = res.data.meta;
+  const meta = res.data.meta;
   return {
     products,
-    info,
+    meta,
     params,
   };
 };

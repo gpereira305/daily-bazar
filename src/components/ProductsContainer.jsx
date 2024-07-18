@@ -6,8 +6,8 @@ import { BsFillGridFill, BsList } from "react-icons/bs";
 
 export default function PaginationContainer() {
   const loaderData = useLoaderData();
-  const { info } = loaderData || {};
-  const totalProducts = info?.pagination?.total || 0;
+  const { meta } = loaderData || {};
+  const totalProducts = meta?.pagination?.total || 0;
 
   const [layout, setLayout] = useState(
     totalProducts === 0 ? "list" : localStorage.getItem("layout") || "grid"

@@ -66,7 +66,7 @@ export default function Filters() {
         Buscar
       </button>
 
-      <Link to="/produtos" className="btn btn-primary btn-sm">
+      <Link to="/products" className="btn btn-primary btn-sm">
         <RxCross2 />
         Limpar filtros
       </Link>

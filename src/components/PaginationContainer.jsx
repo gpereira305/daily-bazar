@@ -2,15 +2,15 @@ import React from "react";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 
 export default function PaginationContainer() {
-  const { info } = useLoaderData();
+  const { meta } = useLoaderData();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { pageCount, page } = meta.pagination;
 
-  const { pageCount, page } = info?.pagination || {};
-
-  if (!pageCount || pageCount < 2) return null;
   const handlePageChange = (pageNumber) => {
-    navigate(`${pathname}?page=${pageNumber}`);
+    const searchParams = new URLSearchParams();
+    searchParams.set("page", pageNumber);
+    navigate(`${pathname}?${searchParams.toString()}`);
   };
 
   const pageButtons = Array.from(
@@ -18,13 +18,27 @@ export default function PaginationContainer() {
     (_, index) => index + 1
   );
 
+  const handleGetPreviousPage = () => {
+    let prevPage = page - 1;
+    if (prevPage < 1) prevPage = pageCount;
+    handlePageChange(prevPage);
+  };
+
+  const handleGetNextPage = () => {
+    let nextPage = page + 1;
+    if (nextPage > pageCount) nextPage = 1;
+    handlePageChange(nextPage);
+  };
+
+  if (!pageCount || pageCount < 2) return null;
+
   return (
     <div className="main-container mt-16 join w-full flex sm:justify-end justify-center flex-wrap sm:flex-nowrap">
       <button
         className={`btn btn-md join-item ${
           page === 1 ? "disabled:opacity-95 hover:cursor-not-allowed" : ""
         }`}
-        onClick={() => handlePageChange((page - 1 + pageCount) % pageCount)}
+        onClick={handleGetPreviousPage}
         disabled={page === 1}
       >
         Anterior
@@ -48,7 +62,7 @@ export default function PaginationContainer() {
             ? "disabled:opacity-95 hover:cursor-not-allowed"
             : ""
         }`}
-        onClick={() => handlePageChange((page + 1) % pageCount)}
+        onClick={handleGetNextPage}
         disabled={page === pageCount}
       >
         Próximo

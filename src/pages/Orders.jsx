@@ -1,6 +1,10 @@
 import React from "react";
 import { customFetch } from "../utils";
-import { OrderList, PaginationContainer, SectionTitle } from "../components";
+import {
+  AdvancedPaginationContainer,
+  OrderList,
+  SectionTitle,
+} from "../components";
 import { useLoaderData } from "react-router-dom";
 
 export const loader =
@@ -53,7 +57,7 @@ export default function Orders() {
       <section className="main-container mt-10">
         <OrderList />
       </section>
-      <PaginationContainer />
+      <AdvancedPaginationContainer />
     </div>
   );
 }
