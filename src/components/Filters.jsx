@@ -8,7 +8,7 @@ import FormRange from "./FormRange";
 import FormCheckbox from "./FormCheckbox";
 
 export default function Filters() {
-  const { info, params } = useLoaderData();
+  const { meta, params } = useLoaderData();
   const { search, company, category, shipping, order, price } = params;
 
   return (
@@ -24,7 +24,7 @@ export default function Filters() {
       <FormSelect
         label="Selecionar a categoria"
         name="category"
-        list={info?.categories}
+        list={meta?.categories}
         size={"select-sm"}
         defaultValue={category}
       />
@@ -32,7 +32,7 @@ export default function Filters() {
       <FormSelect
         label="Selecionar a fabricante"
         name="company"
-        list={info?.companies}
+        list={meta?.companies}
         size={"select-sm"}
         defaultValue={company}
       />

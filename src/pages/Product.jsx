@@ -5,10 +5,18 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
 import Breadcrumb from "../components/Breadcrumb";
 
-export const loader = async ({ params }) => {
-  const response = await customFetch(`/products/${params.id}`);
-  return { product: response.data.data };
+const productQury = (id) => {
+  return {
+    queryKey: ["product", id],
+    queryFn: () => customFetch(`/products/${id}`),
+  };
 };
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    const response = await queryClient.fetchQuery(productQury(params.id));
+    return { product: response.data.data };
+  };
 export default function Product() {
   const { product } = useLoaderData();
   const { name, title, description, image, price, colors, category, company } =
@@ -20,7 +28,6 @@ export default function Product() {
   function handleAmout(e) {
     e.preventDefault();
     setAmount(parseInt(e.target.value));
-    // setProductColor(e.target.value);
   }
 
   const cartproduct = {
